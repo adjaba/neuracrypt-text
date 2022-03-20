@@ -70,7 +70,6 @@ if not path.exists('./spam_clean.csv'):
     gdown.download(drive_url, output)
 
 sms = pd.read_csv('./spam_clean.csv', encoding="latin-1")
-sms
 
 """# Dataset Pre-processing and Analysis"""
 
@@ -95,7 +94,6 @@ word_index = tokenizer.word_index
 sms_token = tokenizer.texts_to_sequences(sms['message'])
 
 index_word = {v: k for k, v in tokenizer.word_index.items()} 
-print(index_word)
 
 # print(sms["message"].copy().reset_index(inplace=False)["message"][0])
 # for w in sms_token[0]:
@@ -104,16 +102,12 @@ print(index_word)
 
 sms['token'] = sms['message'].apply(lambda x: tokenizer.texts_to_sequences([x])[0])
 sms['token_len'] = sms['token'].apply(len)
-sms
 
 sms['token_len'].describe()
 
 # Removing sentences with too little tokenized words
 
 res = sms[sms.token_len > minlen]
-res
-
-max(sms.token_len)
 
 # all_tokens = train_token+test_token
 # avg = sum(map(len, all_tokens))/len(all_tokens)
@@ -217,7 +211,7 @@ print("Tokenized:\n", train_token[shortest])
 print("Tokenized (in words):\n", " ".join([index_word[x] for x in train_token[shortest]]))
 
 maxlen = max(map(len, train_token))
-maxlen
+print("Most tokens in a sentence", maxlen)
 
 pad_to = (maxlen + minlen) // 2
 
